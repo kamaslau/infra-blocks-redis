@@ -41,7 +41,7 @@ docker compose up -d
 Launch Redis with docker on port _6379_.
 
 ```shell
-docker run --name redis -d -p 6379:6379 --restart=always redis/redis-stack-server:latest
+docker run --name redis -d -p 6379:6379 --restart=unless-stopped redis/redis-stack-server:latest
 ```
 
 ## Testing

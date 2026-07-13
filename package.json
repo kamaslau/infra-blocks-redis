@@ -5,7 +5,8 @@
   "license": "MIT",
   "description": "Trial or micro-service unit of Redis, with official Node.js driver.",
   "keywords": [
-    "Redis"
+    "Redis",
+    "Node.js"
   ],
   "type": "module",
   "main": "src/app.js",
