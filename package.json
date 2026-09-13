@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "koa": "^3.2.1",
-    "redis": "^5.12.1"
+    "redis": "^6.2.1"
   },
   "repository": {
     "type": "git",
