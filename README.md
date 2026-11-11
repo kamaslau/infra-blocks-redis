@@ -40,24 +40,26 @@ docker compose up -d
 
 Launch Redis with docker on port _6379_.
 
-```shell
+```bash
 docker run --name redis -d -p 6379:6379 --restart=unless-stopped redis/redis-stack-server:latest
 ```
 
-## Testing
+## Test Drive
 
-Start Node.js application on port _3000_.
+Requires Node.js matching `package.json`.engines.node version.
 
-[http://localhost:3000](http://localhost:3000)
+Start Node.js application on [http://localhost:3000](http://localhost:3000).
 
-```shell
-pnpm i
-pnpm start:dev # or just pnpm start, with PM2 or Docker watching its back
+```bash
+# Run once
+pnpm start
+# Watch mode, restarts on file changes
+pnpm start:dev
 ```
 
 ## Further operations
 
-```shell
+```bash
 # Enter container and initiate shell
 docker exec -it redis sh
 ```

@@ -19,6 +19,7 @@
     "test": "node --test"
   },
   "dependencies": {
+    "http-response-text": "^0.9.2",
     "koa": "^3.3.0",
     "redis": "^6.3.1"
   },

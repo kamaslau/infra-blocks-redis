@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      http-response-text:
+        specifier: ^0.9.2
+        version: 0.9.2
       koa:
         specifier: ^3.3.0
         version: 3.3.0
@@ -116,6 +119,10 @@ packages:
   http-errors@2.0.0:
     resolution: {integrity: sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==}
     engines: {node: '>= 0.8'}
+
+  http-response-text@0.9.2:
+    resolution: {integrity: sha512-W4FqSEqVQ53PKVMYOPojcQm5h1Q9bA10uCMaSmK/HiE3UZ31rOPgn4nFrIfp+Kez867eMyNxKVwEGH/h87D6tA==}
+    engines: {node: ^26 || >=24}
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -272,6 +279,8 @@ snapshots:
       setprototypeof: 1.2.0
       statuses: 2.0.1
       toidentifier: 1.0.1
+
+  http-response-text@0.9.2: {}
 
   inherits@2.0.4: {}
 
