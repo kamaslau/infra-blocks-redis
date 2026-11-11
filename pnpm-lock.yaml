@@ -9,22 +9,22 @@ importers:
   .:
     dependencies:
       koa:
-        specifier: ^3.2.1
-        version: 3.2.1
+        specifier: ^3.3.0
+        version: 3.3.0
       redis:
-        specifier: ^6.2.1
-        version: 6.2.1
+        specifier: ^6.3.1
+        version: 6.3.1
 
 packages:
 
-  '@redis/bloom@6.2.1':
-    resolution: {integrity: sha512-huQgNLaCIZfQ9SeLn4q9124uOUd8HbZDYHwwUzNcRgHqCHiHKl2dDxMqJCeWh8cMqZAoWuHR8XnWbDMIf+o7ag==}
+  '@redis/bloom@6.3.1':
+    resolution: {integrity: sha512-dpF9j2yJDoPzSCaZn0MSB3xzmnXQVJeTSAWJcQVcgbmluwhpFeemmII0cF1t+WYfoVS+shEFq79+MmUItgzJLg==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
-      '@redis/client': ^6.2.1
+      '@redis/client': ^6.3.1
 
-  '@redis/client@6.2.1':
-    resolution: {integrity: sha512-LzxBY7SIBvvJiyCgcaJZZakE3fJrZZ++i24+EDW9fKpCl68D35uJcKFpZZwCfOoG9WZTbyZlMzMeM0gtOAMU9Q==}
+  '@redis/client@6.3.1':
+    resolution: {integrity: sha512-masbfVKULdoAofwddepZxRhWa4w6zvBHn6TRn90TRPrRkVIlGCur3pFqwWaCbMxtYI9twepkz63e/T/tEH8GjA==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
       '@node-rs/xxhash': ^1.1.0
@@ -35,31 +35,27 @@ packages:
       '@opentelemetry/api':
         optional: true
 
-  '@redis/json@6.2.1':
-    resolution: {integrity: sha512-AFIUJ8Gj0DaaSBHYuSt8+O0oYWM+50OK1c0OmodB7XERIA8+BbyV3O4v76f9iccWasd1/7qjfZTpuzexUaZtrQ==}
+  '@redis/json@6.3.1':
+    resolution: {integrity: sha512-fMz4kUwJzEftcU9EMaqsjZcUwzpTQLOYRqhQsAD6uKvZWeamblK13ZhgO5SzVSZVk31jmwLeTRpU5GAl5egfUw==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
-      '@redis/client': ^6.2.1
+      '@redis/client': ^6.3.1
 
-  '@redis/search@6.2.1':
-    resolution: {integrity: sha512-2vfOAOyYFE7UUw3sBBlkqqruBtOUS4HRY5MtW4hp83llrwvtrTE4r22CEqXddlV+54zkLxBE4nmsIJ/dpezQrQ==}
+  '@redis/search@6.3.1':
+    resolution: {integrity: sha512-T67pvPUpW82VrZLvihO8O2DFMC7eY2oMAzMzapCbiPZn7mdWqHMEIlohYim12gIawT5kn6qT/Cvmm4WulKB+kQ==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
-      '@redis/client': ^6.2.1
+      '@redis/client': ^6.3.1
 
-  '@redis/time-series@6.2.1':
-    resolution: {integrity: sha512-kiYniph04dJOole+L359B6C9E+jYS2uDP7hca6Onj0xF38ZIpyxARO0Iq0W4ZRn1e8Q6vqW00QFZVSMRA/2Ijw==}
+  '@redis/time-series@6.3.1':
+    resolution: {integrity: sha512-MNDgrm+i63M/1a+XA+HcDsScwt4uBh/fGGJ84swTQZTFK5K5wMmxdlTRa4ZgmNJzjxMaszW/ipPScMUGV3aAMg==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
-      '@redis/client': ^6.2.1
+      '@redis/client': ^6.3.1
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
     engines: {node: '>= 0.6'}
-
-  cluster-key-slot@1.1.2:
-    resolution: {integrity: sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA==}
-    engines: {node: '>=0.10.0'}
 
   content-disposition@1.0.1:
     resolution: {integrity: sha512-oIXISMynqSqm241k6kcQ5UwttDILMK4BiurCfGEREw6+X9jkkpEe5T9FZaApyLGGOnFuyMWZpdolTXMtvEJ08Q==}
@@ -131,8 +127,8 @@ packages:
   koa-compose@4.1.0:
     resolution: {integrity: sha512-8ODW8TrDuMYvXRwra/Kh7/rJo9BtOfPc6qO8eAfC80CnCvSjSl0bkRM24X6/XBBEyj0v1nRUQ1LyOy3dbqOWXw==}
 
-  koa@3.2.1:
-    resolution: {integrity: sha512-e7IpWJrnanNUroVK2taAgMxoEZvHLXdQiNjeExSu/DEIWm83jaKGBgb7tLmu2rMYpA027qFB3iLR/k3AVpFRnA==}
+  koa@3.3.0:
+    resolution: {integrity: sha512-NdsWJYxVzUuYt718DtEQRhUXqqsAPA4VlaUGrlidjh/T2TP/4OQXqQg4ouUHfHD9f+tgmwLZWPm+JQLgqM9YbA==}
     engines: {node: '>= 18'}
 
   media-typer@1.1.0:
@@ -167,8 +163,8 @@ packages:
     resolution: {integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==}
     engines: {node: '>= 0.8'}
 
-  redis@6.2.1:
-    resolution: {integrity: sha512-Z9VHtgYs48PiQC77X9O2Er8Hj4T+5BtFjT91/vi5Is1D04N72cA946ZslM1ImJw8ZctFBZWAVjM7S5wJNeHMpg==}
+  redis@6.3.1:
+    resolution: {integrity: sha512-mV96ZKxQ4CGn3SyEGaY0Lb9YA443mdVey3c+mdr0NAUaBxiOZGoYCWX8PoM55kictSOmxlJRtZJxIsmZm3jL+w==}
     engines: {node: '>= 20.0.0'}
 
   setprototypeof@1.2.0:
@@ -204,32 +200,28 @@ packages:
 
 snapshots:
 
-  '@redis/bloom@6.2.1(@redis/client@6.2.1)':
+  '@redis/bloom@6.3.1(@redis/client@6.3.1)':
     dependencies:
-      '@redis/client': 6.2.1
+      '@redis/client': 6.3.1
 
-  '@redis/client@6.2.1':
-    dependencies:
-      cluster-key-slot: 1.1.2
+  '@redis/client@6.3.1': {}
 
-  '@redis/json@6.2.1(@redis/client@6.2.1)':
+  '@redis/json@6.3.1(@redis/client@6.3.1)':
     dependencies:
-      '@redis/client': 6.2.1
+      '@redis/client': 6.3.1
 
-  '@redis/search@6.2.1(@redis/client@6.2.1)':
+  '@redis/search@6.3.1(@redis/client@6.3.1)':
     dependencies:
-      '@redis/client': 6.2.1
+      '@redis/client': 6.3.1
 
-  '@redis/time-series@6.2.1(@redis/client@6.2.1)':
+  '@redis/time-series@6.3.1(@redis/client@6.3.1)':
     dependencies:
-      '@redis/client': 6.2.1
+      '@redis/client': 6.3.1
 
   accepts@1.3.8:
     dependencies:
       mime-types: 2.1.35
       negotiator: 0.6.3
-
-  cluster-key-slot@1.1.2: {}
 
   content-disposition@1.0.1: {}
 
@@ -289,7 +281,7 @@ snapshots:
 
   koa-compose@4.1.0: {}
 
-  koa@3.2.1:
+  koa@3.3.0:
     dependencies:
       accepts: 1.3.8
       content-disposition: 1.0.1
@@ -332,13 +324,13 @@ snapshots:
 
   parseurl@1.3.3: {}
 
-  redis@6.2.1:
+  redis@6.3.1:
     dependencies:
-      '@redis/bloom': 6.2.1(@redis/client@6.2.1)
-      '@redis/client': 6.2.1
-      '@redis/json': 6.2.1(@redis/client@6.2.1)
-      '@redis/search': 6.2.1(@redis/client@6.2.1)
-      '@redis/time-series': 6.2.1(@redis/client@6.2.1)
+      '@redis/bloom': 6.3.1(@redis/client@6.3.1)
+      '@redis/client': 6.3.1
+      '@redis/json': 6.3.1(@redis/client@6.3.1)
+      '@redis/search': 6.3.1(@redis/client@6.3.1)
+      '@redis/time-series': 6.3.1(@redis/client@6.3.1)
     transitivePeerDependencies:
       - '@node-rs/xxhash'
       - '@opentelemetry/api'

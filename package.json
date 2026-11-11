@@ -8,16 +8,19 @@
     "Redis",
     "Node.js"
   ],
+  "engines": {
+    "node": "^26 || >=24"
+  },
   "type": "module",
   "main": "src/app.js",
   "scripts": {
-    "test": "node --test",
-    "start:dev": "set NODE_ENV=development && node --watch .",
-    "start": "set NODE_ENV=production && node ."
+    "start": "node .",
+    "start:dev": "node --watch .",
+    "test": "node --test"
   },
   "dependencies": {
-    "koa": "^3.2.1",
-    "redis": "^6.2.1"
+    "koa": "^3.3.0",
+    "redis": "^6.3.1"
   },
   "repository": {
     "type": "git",
