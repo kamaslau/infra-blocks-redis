@@ -1,9 +1,9 @@
 {
-  "name": "trial-redis",
+  "name": "infra-blocks-redis",
   "version": "0.1.0",
   "author": "Lau, Kamas <kamaslau@dingtalk.com> (https://www.kamaslau.com/)",
   "license": "MIT",
-  "description": "Trial or micro-service unit of Redis, with official Node.js driver.",
+  "description": "Redis with the official Node.js client, for a cache, a session store, or a job queue.",
   "keywords": [
     "Redis",
     "Node.js"
@@ -25,10 +25,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kamaslau/trial-redis.git"
+    "url": "git+https://github.com/kamaslau/infra-blocks-redis.git"
   },
   "bugs": {
-    "url": "https://github.com/kamaslau/trial-redis/issues"
+    "url": "https://github.com/kamaslau/infra-blocks-redis/issues"
   },
-  "homepage": "https://github.com/kamaslau/trial-redis#readme"
+  "homepage": "https://github.com/kamaslau/infra-blocks"
 }
