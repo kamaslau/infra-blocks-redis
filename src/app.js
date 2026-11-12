@@ -2,7 +2,8 @@ import Koa from "koa";
 import { createClient } from "redis";
 import { getStatus } from "http-response-text";
 
-const dbUrl = "redis://localhost:6379";
+const dbUrl = process.env.REDIS_URL ?? "redis://localhost:6379";
+const port = Number(process.env.APP_PORT ?? 3000);
 
 // Languages supported by http-response-text, anything else falls back to English
 const languages = ["en", "zh", "ja"];
@@ -20,49 +21,84 @@ const detectLanguage = () => {
 
 const language = detectLanguage();
 
-const initDB = async (url = process.env.REDIS_URL ?? dbUrl) => {
-  const client = createClient({ url });
+const report = async (code, label, payload) => {
+  const { message } = await getStatus(code, language);
+  const line = `${label} (${code} ${message})`;
+  // AggregateError from the socket layer carries no message, only a code
+  const detail =
+    payload instanceof Error
+      ? payload.message || payload.code || payload.name
+      : payload;
 
-  try {
-    await client.connect();
+  if (code < 400) console.log(line, detail ?? "");
+  else console.error(line, detail ?? "");
+};
 
-    const connected = await getStatus(200, language);
-    console.log(`Connect (${connected.code} ${connected.message}) => ${url}`);
+const initDB = async (url) => {
+  const client = createClient({
+    url,
+    socket: {
+      // Unbounded retries leave connect() unsettled and the process logging forever
+      reconnectStrategy: (retries) =>
+        retries > 3 ? new Error(`redis unreachable: ${url}`) : 300,
+    },
+  });
 
-    return client;
-  } catch (error) {
-    const failure = await getStatus(500, language);
-    console.error(
-      `Connect (${failure.code} ${failure.message}) => ${url}`,
-      error,
-    );
-  }
+  // Startup failures are reported by the caller; this covers a connection dropped later
+  let ready = false;
+  client.on("error", (error) => {
+    if (ready) report(503, "Client", error);
+  });
+
+  await client.connect();
+  await client.ping();
+  ready = true;
+
+  return client;
 };
 
 const app = new Koa();
 
-const client = await initDB();
-app.context.db = client;
+let db;
+try {
+  db = await initDB(dbUrl);
+  await report(200, "Connect", dbUrl);
+} catch (error) {
+  // No store, no demo: fail fast and let the supervisor restart us
+  await report(503, "Connect", error);
+  process.exit(1);
+}
+
+app.context.db = db;
 
 app.use(async (ctx) => {
   const keyName = "sample-key:lastRequestedAt";
   const keyValue = Date.now();
 
-  await ctx.db.set(keyName, keyValue);
-  const created = await getStatus(201, language);
-  console.log(`Set (${created.code} ${created.message}) =>`, {
-    key: keyName,
-    value: keyValue,
-  });
+  try {
+    // Write
+    await ctx.db.set(keyName, keyValue);
+    await report(201, "Set", { key: keyName, value: keyValue });
 
-  const value = await ctx.db.get(keyName);
-  const found = await getStatus(value === null ? 404 : 200, language);
-  console.log(`Get (${found.code} ${found.message}) =>`, {
-    key: keyName,
-    value,
-  });
+    // Read
+    const value = await ctx.db.get(keyName);
+    await report(value === null ? 404 : 200, "Get", { key: keyName, value });
 
-  ctx.body = { key: keyName, value };
+    ctx.body = { key: keyName, value };
+  } catch (error) {
+    // 503 while the client is not ready to talk, 500 when it refused the command
+    ctx.status = ctx.db.isReady ? 500 : 503;
+    ctx.body = { error: (await getStatus(ctx.status, language)).message };
+    await report(ctx.status, "Read/Write", error);
+  }
 });
 
-app.listen(3000);
+const server = app.listen(port, () =>
+  report(200, "Listen", `http://127.0.0.1:${port}`),
+);
+
+server.on("error", async (error) => {
+  // EADDRINUSE: another process already owns the port
+  await report(error.code === "EADDRINUSE" ? 409 : 500, "Listen", error);
+  process.exit(1);
+});
