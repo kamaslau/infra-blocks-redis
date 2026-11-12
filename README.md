@@ -60,6 +60,29 @@ docker compose exec -T redis redis-cli get healthcheck
 
 `src/` contains the same check through the official Node.js driver — `pnpm start` — which is the closer proof when the client is a Node service.
 
+### What the demo reports when it fails
+
+Each `GET /` writes a key and reads it back, logging one line per step with the status text from [http-response-text](https://github.com/kamaslau/http-response-text). The service listens on `APP_PORT` (3000), not on the Redis port:
+
+```bash
+cp .env.example .env
+pnpm install
+pnpm start
+curl -s http://127.0.0.1:3000/
+# {"key":"sample-key:lastRequestedAt","value":"1763000000000"}
+# Set (201 Created) { key: 'sample-key:lastRequestedAt', value: 1763000000000 }
+# Get (200 OK) { key: 'sample-key:lastRequestedAt', value: '1763000000000' }
+```
+
+| What happened | What you see | Process |
+|---|---|---|
+| Store unreachable at startup | `Connect (503 Service Unavailable) redis unreachable: redis://localhost:6379` | exits `1` |
+| Connection drops while serving | `Client (503 Service Unavailable) Socket closed unexpectedly`, request answers `503` | keeps running |
+| Command refused (wrong type, OOM) | request answers `500` with `{ "error": "Internal Server Error" }` | keeps running |
+| `APP_PORT` already in use | `Listen (409 Conflict) listen EADDRINUSE: address already in use :::3000` | exits `1` |
+
+The client retries three times before giving up, because the default strategy retries forever and leaves `connect()` unsettled — the process would log without ever failing. Message language follows `LANG` / `LC_ALL` — `en`, `zh`, `ja`, anything else falls back to English.
+
 ## Why this shape
 
 `redis/redis-stack-server` rather than the plain `redis` image, because the JSON and search types are the reason Redis is useful beyond a key-value cache, and switching images later means switching persistence formats too.
