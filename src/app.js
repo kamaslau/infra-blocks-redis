@@ -1,12 +1,12 @@
 import Koa from "koa";
 import { createClient } from "redis";
-import { getStatus } from "http-response-text";
+import { getStatus, listLanguages } from "http-response-text";
 
 const dbUrl = process.env.REDIS_URL ?? "redis://localhost:6379";
 const port = Number(process.env.APP_PORT ?? 3000);
 
-// Languages supported by http-response-text, anything else falls back to English
-const languages = ["en", "zh", "ja"];
+// Whatever the installed version ships, anything else falls back to English
+const languages = await listLanguages();
 
 const detectLanguage = () => {
   const locale =
@@ -16,7 +16,7 @@ const detectLanguage = () => {
     Intl.DateTimeFormat().resolvedOptions().locale;
   const language = locale.split(/[-_.]/)[0].toLowerCase();
 
-  return languages.find((item) => item === language) ?? "en";
+  return [...languages].find((item) => item === language) ?? "en";
 };
 
 const language = detectLanguage();

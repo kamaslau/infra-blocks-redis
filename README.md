@@ -81,7 +81,7 @@ curl -s http://127.0.0.1:3000/
 | Command refused (wrong type, OOM) | request answers `500` with `{ "error": "Internal Server Error" }` | keeps running |
 | `APP_PORT` already in use | `Listen (409 Conflict) listen EADDRINUSE: address already in use :::3000` | exits `1` |
 
-The client retries three times before giving up, because the default strategy retries forever and leaves `connect()` unsettled — the process would log without ever failing. Message language follows `LANG` / `LC_ALL` — `en`, `zh`, `ja`, anything else falls back to English.
+The client retries three times before giving up, because the default strategy retries forever and leaves `connect()` unsettled — the process would log without ever failing. Message language follows `LANG` / `LC_ALL`, matched against `listLanguages()` from the installed http-response-text (`en`, `zh`, `ja`, `fr` today); anything else falls back to English.
 
 ## Why this shape
 
