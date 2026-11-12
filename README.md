@@ -2,6 +2,7 @@
 
 [![Blocks](https://img.shields.io/badge/infra--blocks-index-555?style=flat-square)](https://github.com/kamaslau/infra-blocks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+![Repository size](https://img.shields.io/github/repo-size/kamaslau/infra-blocks-redis?color=56BEB8)
 
 A unit, not a demo: one service, one port, one documented credential, disposable with a single command.
 
