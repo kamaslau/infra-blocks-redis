@@ -1,23 +1,27 @@
-# trial-redis
+# infra-blocks-redis
 
+[![Blocks](https://img.shields.io/badge/infra--blocks-index-555?style=flat-square)](https://github.com/kamaslau/infra-blocks)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-![Repository size](https://img.shields.io/github/repo-size/kamaslau/trial-redis?color=56BEB8)
 
-Trial or micro-service unit of [Redis](https://redis.io/docs/) with [official Node.js client driver](https://redis.io/docs/clients/nodejs/).
+A unit, not a demo: one service, one port, one documented credential, disposable with a single command.
 
-The [Official RedisInsight](https://redis.com/redis-enterprise/redis-insight/) or [Another Redis Desktop Manager](https://github.com/qishibo/AnotherRedisDesktopManager) is recommended as the desktop client.
+Typical use: a cache, a session store, or a job queue that has to exist before the application that fills it can be tested.
+
+[Redis](https://redis.io/docs/) with the [official Node.js client](https://redis.io/docs/clients/nodejs/). Desktop clients: [RedisInsight](https://redis.io/insight/) or [Another Redis Desktop Manager](https://github.com/qishibo/AnotherRedisDesktopManager).
 
 ## Service URL
 
-- Database (Redis) [redis://localhost:6379](redis://localhost:6379)
+- Database (Redis) `redis://localhost:6379`
+
+Ports can be changed in `.env`; see Usage.
 
 ## Default user
 
-None, as default.
+None by default — Redis starts without auth, and the port is published. Fine for a laptop or an intranet host you control; not fine on a public interface.
 
 ## Usage
 
-### Start up with [Docker Compose](https://docs.docker.com/compose/)
+### Start with [Docker Compose](https://docs.docker.com/compose/)
 
 ```bash
 # Initiate .env file
@@ -36,35 +40,39 @@ docker compose up -d
 
 ### Start services individually
 
-#### Redis
-
-Launch Redis with docker on port _6379_.
-
 ```bash
 docker run --name redis -d -p 6379:6379 --restart=unless-stopped redis/redis-stack-server:latest
 ```
 
-## Test Drive
-
-Requires Node.js matching `package.json`.engines.node version.
-
-Start Node.js application on [http://localhost:3000](http://localhost:3000).
+## Verify
 
 ```bash
-# Run once
-pnpm start
-# Watch mode, restarts on file changes
-pnpm start:dev
+docker compose exec -T redis redis-cli ping
 ```
 
-## Further operations
+`PONG` is the whole answer. If you want the round trip an application actually makes:
 
 ```bash
-# Enter container and initiate shell
-docker exec -it redis sh
+docker compose exec -T redis redis-cli set healthcheck ok && \
+docker compose exec -T redis redis-cli get healthcheck
 ```
 
-## References
+`src/` contains the same check through the official Node.js driver — `pnpm start` — which is the closer proof when the client is a Node service.
 
-- [Redis on Docker Hub](https://hub.docker.com/_/redis)
-- https://developer.redis.com/create/docker/redis-on-docker/
+## Why this shape
+
+`redis/redis-stack-server` rather than the plain `redis` image, because the JSON and search types are the reason Redis is useful beyond a key-value cache, and switching images later means switching persistence formats too.
+
+Persistence is left at the image default. A cache should lose its contents on restart; a queue should not, and that is the point where you add `--appendonly yes` to the service command rather than change the image. Writing that down is cheaper than rediscovering it after a restart during a demo.
+
+The volume at `/data` exists so `docker compose down` does not throw away the RDB on every code change — only `down -v` does. The distinction matters because the most common way to lose a queue is a `down -v` run out of habit.
+
+No auth, and the port published on the host. This is the same trade-off as the other data units: the readable default is worth more than a credential on a machine that is already behind the client's firewall, and it stops being true the moment the machine is not.
+
+## Notes for deployments in China
+
+`redis/redis-stack-server` pulls from Docker Hub; configure a registry mirror or pre-pull before the handover. `appendonly` plus a volume is the combination that survives a host reboot — verify it once with `redis-cli info persistence` rather than assuming.
+
+---
+
+Part of [infrastructure blocks](https://github.com/kamaslau/infra-blocks) · ← back to index
