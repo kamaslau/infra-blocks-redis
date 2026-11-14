@@ -99,4 +99,4 @@ No auth, and the port published on the host. This is the same trade-off as the o
 
 ---
 
-Part of [infrastructure blocks](https://github.com/kamaslau/infra-blocks) · ← back to index
+Part of [infrastructure blocks](https://github.com/kamaslau/infra-blocks) · ← back to index · [what I do](https://www.kamaslau.com/works?utm_source=github&utm_medium=repo-readme&utm_campaign=always-on&utm_content=unit)
